@@ -1,11 +1,11 @@
-.homePageWrapper{
-    height: 100vh;
+.homePageWrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     color: #ffffff;
 }
-.formWrapper{
+
+.formWrapper {
     background: #282a36;
     padding: 20px;
     border-radius: 10px;
@@ -13,29 +13,31 @@
     max-width: 90%;
 }
 
-footer{
+footer {
     position: fixed;
     bottom: 0;
 }
-footer a{
+
+footer a {
     color: #4aee88;
 }
 
-.mainLabel{
+.mainLabel {
     margin-bottom: 20px;
     margin-top: 0;
 }
 
-.homePageLogo{
+.homePageLogo {
     height: 80px;
     margin-bottom: 30px;
 }
 
-.inputGroup{
+.inputGroup {
     display: flex;
     flex-direction: column;
 }
-.inputBox{
+
+.inputBox {
     padding: 10px;
     border-radius: 5px;
     outline: none;
@@ -46,34 +48,97 @@ footer a{
     font-weight: bold;
 }
 
-.btn{
+.btn {
     border: none;
     padding: 10px;
     border-radius: 5px;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
 
-.joinBtn{
+.joinBtn, .leaveBtn {
     background: #4aee88;
     width: 100px;
     margin-left: auto;
 }
-.joinBtn:hover{
+
+.joinBtn:hover, .leaveBtn:hover {
     background: #2b824c;
 }
-.createInfo{
+
+.createInfo {
     margin: 0 auto;
     margin-top: 20px;
 }
-.createNewBtn{
+
+.createNewBtn {
     color: #4aee88;
     text-decoration: none;
     border-bottom: 1px solid #4aee88;
     transition: all 0.3s ease-in-out;
 }
-.createNewBtn:hover, footer a:hover{
+
+.createNewBtn:hover, footer a:hover {
     color: #2b824c;
     border-color: #2b824c;
+}
+
+/*editor page css*/
+.mainWrap {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    height: 100vh;
+}
+
+.aside {
+    background: #1c1e29;
+    padding: 16px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.asideInner {
+    flex: 1;
+}
+
+.clientsList {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.client{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    font-weight: bold;
+}
+
+.logo{
+    border-bottom: 1px solid #424242;
+    padding-bottom: 10px;
+}
+
+.logoImage{
+    height: 60px;
+}
+
+.leaveBtn{
+    margin-top: 20px;
+    width: 100%;
+}
+
+.editorWrap{
+    background: #ffffff;
+}
+
+.CodeMirror{
+    min-height: calc(100vh - 20px);
+    font-size: 16px;
+    line-height: 1.6;
+    padding-top: 20px;
 }
