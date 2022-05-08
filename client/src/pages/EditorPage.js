@@ -2,19 +2,15 @@ import React, {useEffect, useRef, useState} from 'react';
 import Client from "../components/Client";
 import Editor from "../components/Editor";
 import {initSocket} from "../socket";
-import {ActionType} from "react-hot-toast/dist/core/store";
 import ACTIONS from "../Actions";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams, Navigate} from "react-router-dom";
 import {toast} from "react-hot-toast";
 
 function EditorPage(props) {
     const socketRef = useRef(null);
-    const [clients, setClients] = useState([
-        {socketId: 1, username: 'Faizan S'},
-        {socketId: 2, username: 'Sahana F'},
-    ]);
-    const loaction = useLocation();
-    const navigate = useNavigate();
+    const [clients, setClients] = useState([]);
+    const location = useLocation();
+    const navigator = useNavigate();
     const params = useParams();
 
     useEffect(() => {
@@ -26,17 +22,41 @@ function EditorPage(props) {
             const handleErrors = (e) => {
                 console.log('socket error', e);
                 toast.error('Socket connection failed,  try again later.');
-                navigate('/');
+                navigator('/');
             }
 
             socketRef.current.emit(ACTIONS.JOIN, {
                 roomId: params.roomId,
-                username: loaction.state?.username
+                username: location.state?.username
             });
+
+            //Listing for joined event
+            socketRef.current.on(ACTIONS.JOINED, ({clients, username, socketId}) => {
+                if (username !== location.state?.username) {
+                    toast.success(`${username} joined the room`);
+                }
+                setClients(clients);
+            });
+
+            //Listing for disconnected
+            socketRef.current.on(ACTIONS.DISCONNECTED, ({socketId, username}) => {
+                toast.success(`${username} left the room`);
+                setClients((prev) => {
+                    return prev.filter((client) => client.socketId !== socketId);
+                })
+            })
         }
         init();
+        return () => {
+            socketRef.current.disconnect();
+            socketRef.current.off(ACTIONS.JOINED);
+            socketRef.current.off(ACTIONS.DISCONNECTED);
+        }
     }, []);
 
+    if (!location.state) {
+        return <Navigate to="/"/>
+    }
 
     return (
         <div className="mainWrap">
